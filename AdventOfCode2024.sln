@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{BE4F4C69
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC2024_02", "AoC2024_02\AoC2024_02.csproj", "{A210BD1E-B9A7-4CBD-9535-F3B704EEF54B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC2024_03", "AoC2024_03\AoC2024_03.csproj", "{943FEB75-8541-44F1-A2E6-3B54B4BA4591}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{A210BD1E-B9A7-4CBD-9535-F3B704EEF54B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A210BD1E-B9A7-4CBD-9535-F3B704EEF54B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A210BD1E-B9A7-4CBD-9535-F3B704EEF54B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{943FEB75-8541-44F1-A2E6-3B54B4BA4591}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{943FEB75-8541-44F1-A2E6-3B54B4BA4591}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{943FEB75-8541-44F1-A2E6-3B54B4BA4591}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{943FEB75-8541-44F1-A2E6-3B54B4BA4591}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
