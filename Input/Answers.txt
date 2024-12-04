@@ -1,0 +1,2 @@
+Day 01 Puzzle 1 Answer = 1834060
+Day 01 Puzzle 2 Answer = 21607792
