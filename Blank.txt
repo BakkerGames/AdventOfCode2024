@@ -1,0 +1,29 @@
+namespace AoC2024_XX;
+
+internal class Program
+{
+    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_XX_Test.txt";
+
+    static void Main()
+    {
+        Puzzle1();
+        Puzzle2();
+        Console.ReadLine();
+    }
+
+    static void Puzzle1()
+    {
+        var lines = File.ReadAllLines(inputFile);
+        int answer = 0;
+        // ...
+        Console.WriteLine($"Day XX Puzzle 1 Answer = {answer}");
+    }
+
+    static void Puzzle2()
+    {
+        var lines = File.ReadAllLines(inputFile);
+        int answer = 0;
+        // ...
+        Console.WriteLine($"Day XX Puzzle 2 Answer = {answer}");
+    }
+}
