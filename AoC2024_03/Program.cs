@@ -4,7 +4,7 @@ internal class Program
 {
     private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_03.txt";
 
-    static void Main(string[] args)
+    static void Main()
     {
         Puzzle1();
         Puzzle2();
