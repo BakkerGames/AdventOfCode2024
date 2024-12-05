@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{BE4F4C69
 		Input\Day_03.txt = Input\Day_03.txt
 		Input\Day_03_Test_1.txt = Input\Day_03_Test_1.txt
 		Input\Day_03_Test_2.txt = Input\Day_03_Test_2.txt
+		Input\Day_04.txt = Input\Day_04.txt
+		Input\Day_04_Test.txt = Input\Day_04_Test.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC2024_02", "AoC2024_02\AoC2024_02.csproj", "{A210BD1E-B9A7-4CBD-9535-F3B704EEF54B}"
@@ -25,7 +27,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Puzzles", "Puzzles", "{A406
 		Puzzles\Day_01.txt = Puzzles\Day_01.txt
 		Puzzles\Day_02.txt = Puzzles\Day_02.txt
 		Puzzles\Day_03.txt = Puzzles\Day_03.txt
+		Puzzles\Day_04.txt = Puzzles\Day_04.txt
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC2024_04", "AoC2024_04\AoC2024_04.csproj", "{4CE9C4D5-DDAE-4043-8E2B-123D2435233F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +50,10 @@ Global
 		{943FEB75-8541-44F1-A2E6-3B54B4BA4591}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{943FEB75-8541-44F1-A2E6-3B54B4BA4591}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{943FEB75-8541-44F1-A2E6-3B54B4BA4591}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CE9C4D5-DDAE-4043-8E2B-123D2435233F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE9C4D5-DDAE-4043-8E2B-123D2435233F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE9C4D5-DDAE-4043-8E2B-123D2435233F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE9C4D5-DDAE-4043-8E2B-123D2435233F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

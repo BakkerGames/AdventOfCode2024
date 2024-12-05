@@ -6,7 +6,7 @@ internal class Program
 
     static void Main(string[] args)
     {
-        //Puzzle1();
+        Puzzle1();
         Puzzle2();
         Console.ReadLine();
     }
