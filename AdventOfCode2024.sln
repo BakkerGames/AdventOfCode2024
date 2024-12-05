@@ -7,12 +7,25 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC2024_01", "AoC2024_01\Ao
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{BE4F4C69-5A31-47F8-9F7C-63DE0E99DCD2}"
 	ProjectSection(SolutionItems) = preProject
-		Input\AoC2024_01.txt = Input\AoC2024_01.txt
+		Input\Day_01.txt = Input\Day_01.txt
+		Input\Day_01_Test.txt = Input\Day_01_Test.txt
+		Input\Day_02.txt = Input\Day_02.txt
+		Input\Day_02_Test.txt = Input\Day_02_Test.txt
+		Input\Day_03.txt = Input\Day_03.txt
+		Input\Day_03_Test_1.txt = Input\Day_03_Test_1.txt
+		Input\Day_03_Test_2.txt = Input\Day_03_Test_2.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC2024_02", "AoC2024_02\AoC2024_02.csproj", "{A210BD1E-B9A7-4CBD-9535-F3B704EEF54B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC2024_03", "AoC2024_03\AoC2024_03.csproj", "{943FEB75-8541-44F1-A2E6-3B54B4BA4591}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Puzzles", "Puzzles", "{A4063279-CE7E-4D85-8526-C2CCB8E46478}"
+	ProjectSection(SolutionItems) = preProject
+		Puzzles\Day_01.txt = Puzzles\Day_01.txt
+		Puzzles\Day_02.txt = Puzzles\Day_02.txt
+		Puzzles\Day_03.txt = Puzzles\Day_03.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
