@@ -7,22 +7,23 @@ internal class Program
     static void Main()
     {
         Puzzle1();
+        Console.WriteLine();
         Puzzle2();
         Console.ReadLine();
     }
 
     static void Puzzle1()
     {
-        var lines = File.ReadAllLines(inputFile);
         int answer = 0;
+        var lines = File.ReadAllLines(inputFile);
         // ...
         Console.WriteLine($"Day XX Puzzle 1 Answer = {answer}");
     }
 
     static void Puzzle2()
     {
-        var lines = File.ReadAllLines(inputFile);
         int answer = 0;
+        var lines = File.ReadAllLines(inputFile);
         // ...
         Console.WriteLine($"Day XX Puzzle 2 Answer = {answer}");
     }
