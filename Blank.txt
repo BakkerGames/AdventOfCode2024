@@ -14,7 +14,7 @@ internal class Program
 
     static void Puzzle1()
     {
-        int answer = 0;
+        long answer = 0;
         var lines = File.ReadAllLines(inputFile);
         // ...
         Console.WriteLine($"Day XX Puzzle 1 Answer = {answer}");
@@ -22,7 +22,7 @@ internal class Program
 
     static void Puzzle2()
     {
-        int answer = 0;
+        long answer = 0;
         var lines = File.ReadAllLines(inputFile);
         // ...
         Console.WriteLine($"Day XX Puzzle 2 Answer = {answer}");
