@@ -9,6 +9,8 @@ internal class Program
         Puzzle1();
         Console.WriteLine();
         Puzzle2();
+        Console.WriteLine();
+        Console.Write("Press enter to continue...");
         Console.ReadLine();
     }
 
