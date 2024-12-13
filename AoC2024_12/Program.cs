@@ -45,6 +45,17 @@ internal class Program
     {
         long answer = 0;
         var lines = File.ReadAllLines(inputFile);
+        height = lines.Length;
+        width = lines[0].Length;
+        visited = new bool[height, width];
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                visited[y, x] = false;
+            }
+        }
+        var regions = GetRegions(lines);
         // ...
         Console.WriteLine($"Day 12 Puzzle 2 Answer = {answer}");
     }
@@ -77,15 +88,19 @@ internal class Program
         {
             Plant = plant,
             Y = y,
-            X = x,
-            Perimeter = 0
+            X = x
         };
-        if (y - 1 < 0 || lines[y - 1][x] != plant) plot.Perimeter++;
-        if (x + 1 >= width || lines[y][x + 1] != plant) plot.Perimeter++;
-        if (y + 1 >= height || lines[y + 1][x] != plant) plot.Perimeter++;
-        if (x - 1 < 0 || lines[y][x - 1] != plant) plot.Perimeter++;
+        if (y - 1 < 0 || lines[y - 1][x] != plant)
+            plot.NorthFence = true;
+        if (x + 1 >= width || lines[y][x + 1] != plant)
+            plot.EastFence = true;
+        if (y + 1 >= height || lines[y + 1][x] != plant)
+            plot.SouthFence = true;
+        if (x - 1 < 0 || lines[y][x - 1] != plant)
+            plot.WestFence = true;
         visited[y, x] = true;
         region.Plots.Add(plot);
+
         // check adjacent plots
         if (y - 1 >= 0 && !visited[y - 1, x] && lines[y - 1][x] == plant)
         {

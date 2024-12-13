@@ -12,6 +12,11 @@ public class Region
 
     public long Parimeter()
     {
-        return Plots.Sum(x => x.Perimeter);
+        return Plots.Sum(x => x.Perimeter());
+    }
+
+    public long Sides()
+    {
+        
     }
 }
