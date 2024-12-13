@@ -56,7 +56,10 @@ internal class Program
             }
         }
         var regions = GetRegions(lines);
-        // ...
+        foreach (Region r in regions)
+        {
+            answer += r.Area() * r.Sides();
+        }
         Console.WriteLine($"Day 12 Puzzle 2 Answer = {answer}");
     }
 
@@ -100,6 +103,16 @@ internal class Program
             plot.WestFence = true;
         visited[y, x] = true;
         region.Plots.Add(plot);
+
+        // set region bounds
+        if (region.MinY == -1 || region.MinY > y)
+            region.MinY = y;
+        if (region.MinX == -1 || region.MinX > x)
+            region.MinX = x;
+        if (region.MaxY == -1 || region.MaxY < y)
+            region.MaxY = y;
+        if (region.MaxX == -1 || region.MaxX < x)
+            region.MaxX = x;
 
         // check adjacent plots
         if (y - 1 >= 0 && !visited[y - 1, x] && lines[y - 1][x] == plant)

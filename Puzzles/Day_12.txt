@@ -1,3 +1,7 @@
+Advent of Code[About][Events][Shop][Settings][Log Out]Scott Bakker 24*
+   0x0000|2024[Calendar][AoC++][Sponsors][Leaderboard][Stats]
+Our sponsors help make Advent of Code possible:
+Jump Trading - Tech. Research. Trading. Come build trading algos, write high performance software, and train sophisticated ML models to beat the market.
 --- Day 12: Garden Groups ---
 Why not search for the Chief Historian near the gardener and his massive farm? There's plenty of food, so The Historians grab something to eat while they search.
 
@@ -80,8 +84,6 @@ What is the total price of fencing all regions on your map?
 
 Your puzzle answer was 1473620.
 
-The first half of this puzzle is complete! It provides one gold star: *
-
 --- Part Two ---
 Fortunately, the Elves are trying to order so much fence that they qualify for a bulk discount!
 
@@ -135,9 +137,12 @@ Adding these together produces its new total price of 1206.
 
 What is the new total price of fencing all regions on your map?
 
-Answer: 
- 
+Your puzzle answer was 902620.
 
-Although it hasn't changed, you can still get your puzzle input.
+Both parts of this puzzle are complete! They provide two gold stars: **
+
+At this point, you should return to your Advent calendar and try another puzzle.
+
+If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
