@@ -2,7 +2,7 @@
 
 internal class Program
 {
-    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_13_Test.txt";
+    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_13.txt";
 
     static void Main()
     {
@@ -104,6 +104,17 @@ internal class Program
 
     private static long CalculateTokens2(long aX, long aY, long bX, long bY, long prizeX, long prizeY)
     {
+        // (aX * aPress) + (bX * bPress) = prizeX
+        // (aY * aPress) + (bY * bPress) = prizeY
+
+        long det = (aX * bY) - (aY * bX);
+        long aPress = ((prizeX * bY) - (prizeY * bX)) / det;
+        long bPress = ((prizeY * aX) - (prizeX * aY)) / det;
+        if (((aX * aPress) + (bX * bPress) == prizeX) &&
+            ((aY * aPress) + (bY * bPress) == prizeY))
+        {
+            return aPress * 3 + bPress;
+        }
         return 0;
     }
 }
