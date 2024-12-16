@@ -30,18 +30,16 @@ internal class Program
             var vector = lineParts[1][2..].Split(',').Select(x => int.Parse(x)).ToArray();
             var r = new Robot()
             {
-                StartY = starting[1],
-                StartX = starting[0],
-                VectorY = vector[1],
-                VectorX = vector[0]
+                Position = new Point(starting[1], starting[0]),
+                Vector = new Point(vector[1], vector[0])
             };
             robots.Add(r);
         }
         int[] quadrants = new int[4];
         foreach (Robot r in robots)
         {
-            var EndingY = (((r.StartY + (r.VectorY * moves)) % height) + height) % height;
-            var EndingX = (((r.StartX + (r.VectorX * moves)) % width) + width ) % width;
+            var EndingY = (((r.Position.Y + (r.Vector.Y * moves)) % height) + height) % height;
+            var EndingX = (((r.Position.X + (r.Vector.X * moves)) % width) + width) % width;
             if (EndingY < height / 2)
             {
                 if (EndingX < width / 2)
@@ -73,7 +71,42 @@ internal class Program
     {
         long answer = 0;
         var lines = File.ReadAllLines(inputFile);
-        // ...
+        List<Robot> robots = [];
+        var height = 103;
+        var width = 101;
+        foreach (string s in lines)
+        {
+            if (string.IsNullOrWhiteSpace(s)) continue;
+            var lineParts = s.Split(' ', StringSplitOptions.TrimEntries);
+            var starting = lineParts[0][2..].Split(',').Select(x => int.Parse(x)).ToArray();
+            var vector = lineParts[1][2..].Split(',').Select(x => int.Parse(x)).ToArray();
+            var r = new Robot()
+            {
+                Position = new Point(starting[1], starting[0]),
+                Vector = new Point(vector[1], vector[0])
+            };
+            robots.Add(r);
+        }
+        while (true)
+        {
+            answer++;
+            var grid = new bool[height, width];
+            foreach (Robot r in robots)
+            {
+                grid[r.Position.Y, r.Position.X] = true;
+                r.Position.Y = (((r.Position.Y + r.Vector.Y) % height) + height ) % height;
+                r.Position.X = (((r.Position.X + r.Vector.X) % height) + height ) % height;
+            }
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    Console.Write(grid[y,x] ? '#' :  ' ');
+                }
+                Console.WriteLine();
+            }
+            break;
+        }
         Console.WriteLine($"Day 14 Puzzle 2 Answer = {answer}");
     }
 }

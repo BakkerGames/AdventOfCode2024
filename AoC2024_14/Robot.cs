@@ -2,8 +2,6 @@
 
 public class Robot
 {
-    public int StartY { get; set; } = 0;
-    public int StartX { get; set; } = 0;
-    public int VectorY { get; set; } = 0;
-    public int VectorX { get; set; } = 0;
+    public Point Position { get; set; } = new Point(0, 0);
+    public Point Vector { get; set; } = new Point(0, 0);
 }
