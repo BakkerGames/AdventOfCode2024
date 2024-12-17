@@ -89,24 +89,60 @@ internal class Program
         }
         while (true)
         {
-            answer++;
             var grid = new bool[height, width];
             foreach (Robot r in robots)
             {
                 grid[r.Position.Y, r.Position.X] = true;
-                r.Position.Y = (((r.Position.Y + r.Vector.Y) % height) + height ) % height;
-                r.Position.X = (((r.Position.X + r.Vector.X) % height) + height ) % height;
+                r.Position.Y = ModPos(r.Position.Y + r.Vector.Y,  height);
+                r.Position.X = ModPos(r.Position.X + r.Vector.X, width);
+            }
+            var found = false;
+            for (int y = 0; y < height; y++)
+            {
+                var maxTrue = 0;
+                for (int x = 0; x < width; x++)
+                {
+                    if (grid[y, x])
+                    {
+                        maxTrue++;
+                        if (maxTrue >= 9)
+                        {
+                            found = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        maxTrue = 0;
+                    }
+                }
+                if (found) break;
+            }
+            if (!found)
+            {
+                answer++;
+                continue;
             }
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
-                    Console.Write(grid[y,x] ? '#' :  ' ');
+                    Console.Write(grid[y, x] ? '#' : ' ');
                 }
                 Console.WriteLine();
             }
             break;
         }
         Console.WriteLine($"Day 14 Puzzle 2 Answer = {answer}");
+    }
+
+    private static int ModPos(int value, int modulus)
+    {
+        int result = value % modulus;
+        if (result < 0)
+        {
+            result += modulus;
+        }
+        return result;
     }
 }
