@@ -31,7 +31,7 @@ internal class Program
             height++;
         }
         var grid = new char[height, width];
-        Robot robot = new();
+        Point robot = new();
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -138,7 +138,7 @@ internal class Program
             height++;
         }
         var grid = new char[height, width * 2];
-        Robot robot = new();
+        Point robot = new();
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -166,61 +166,130 @@ internal class Program
                 }
             }
         }
-        //foreach (string s in lines[height..])
-        //{
-        //    foreach (char c in s)
-        //    {
-        //        int moveY = 0;
-        //        int moveX = 0;
-        //        switch (c)
-        //        {
-        //            case '^':
-        //                moveY = -1;
-        //                break;
-        //            case '>':
-        //                moveX = 1;
-        //                break;
-        //            case 'v':
-        //                moveY = 1;
-        //                break;
-        //            case '<':
-        //                moveX = -1;
-        //                break;
-        //        }
-        //        if (moveY == 0 && moveX == 0) continue;
-        //        if (grid[robot.Y + moveY, robot.X + moveX] == wallChar)
-        //        {
-        //            continue; // hit wall, don't move
-        //        }
-        //        if (grid[robot.Y + moveY, robot.X + moveX] == floorChar)
-        //        {
-        //            grid[robot.Y, robot.X] = floorChar;
-        //            robot.Y += moveY;
-        //            robot.X += moveX;
-        //            grid[robot.Y, robot.X] = robotChar;
-        //            continue;
-        //        }
-        //        // hit a box
-        //        int testY = robot.Y + moveY;
-        //        int testX = robot.X + moveX;
-        //        while (grid[testY, testX] == boxChar)
-        //        {
-        //            testY += moveY;
-        //            testX += moveX;
-        //        }
-        //        if (grid[testY, testX] == wallChar)
-        //        {
-        //            // hit a wall, can't move boxes
-        //            continue;
-        //        }
-        //        // move box to end (don't have to move whole line!)
-        //        grid[testY, testX] = boxChar;
-        //        grid[robot.Y, robot.X] = floorChar;
-        //        robot.Y += moveY;
-        //        robot.X += moveX;
-        //        grid[robot.Y, robot.X] = robotChar;
-        //    }
-        //}
+        foreach (string s in lines[height..])
+        {
+            foreach (char c in s)
+            {
+                int moveY = 0;
+                int moveX = 0;
+                switch (c)
+                {
+                    case '^':
+                        moveY = -1;
+                        break;
+                    case '>':
+                        moveX = 1;
+                        break;
+                    case 'v':
+                        moveY = 1;
+                        break;
+                    case '<':
+                        moveX = -1;
+                        break;
+                }
+                if (moveY == 0 && moveX == 0) continue;
+                if (grid[robot.Y + moveY, robot.X + moveX] == wallChar)
+                {
+                    continue; // hit wall, don't move
+                }
+                if (grid[robot.Y + moveY, robot.X + moveX] == floorChar)
+                {
+                    grid[robot.Y, robot.X] = floorChar;
+                    robot.Y += moveY;
+                    robot.X += moveX;
+                    grid[robot.Y, robot.X] = robotChar;
+                    continue;
+                }
+                // hit a box
+                int testY = robot.Y + moveY;
+                int testX = robot.X + moveX;
+                if (moveY == 0) // horizontal
+                {
+                    while (grid[testY, testX] == boxChar1 || grid[testY, testX] == boxChar2)
+                    {
+                        testX += moveX;
+                    }
+                    if (grid[testY, testX] == wallChar)
+                    {
+                        continue; // hit a wall, can't move boxes
+                    }
+                    while (testX != robot.X)
+                    {
+                        grid[testY, testX] = grid[testY, testX - moveX];
+                        testX -= moveX;
+                    }
+                    grid[robot.Y, robot.X] = floorChar;
+                    robot.X += moveX;
+                    grid[robot.Y, robot.X] = robotChar;
+                }
+                else // vertical, have to move boxes as a unit
+                {
+                    List<Point> boxes = [];
+                    List<Point> currBoxes = [];
+                    List<Point> newBoxes = [];
+                    currBoxes.Add(new Point(testY, testX));
+                    if (grid[testY, testX] == boxChar1)
+                    {
+                        currBoxes.Add(new Point(testY, testX + 1));
+                    }
+                    else
+                    {
+                        currBoxes.Add(new Point(testY, testX - 1));
+                    }
+                    var blocked = false;
+                    var foundBox = true;
+                    while (!blocked && foundBox)
+                    {
+                        testY += moveY;
+                        newBoxes.Clear();
+                        blocked = false;
+                        foundBox = false;
+                        foreach (Point p in currBoxes)
+                        {
+                            if (grid[p.Y + moveY, p.X] == wallChar)
+                            {
+                                blocked = true;
+                                break;
+                            }
+                            if (grid[p.Y + moveY, p.X] == boxChar1)
+                            {
+                                foundBox = true;
+                                var p1 = new Point(p.Y + moveY, p.X);
+                                var p2 = new Point(p.Y + moveY, p.X + 1);
+                                if (!newBoxes.Contains(p1)) newBoxes.Add(p1);
+                                if (!newBoxes.Contains(p2)) newBoxes.Add(p2);
+                            }
+                            else if (grid[p.Y + moveY, p.X] == boxChar2)
+                            {
+                                foundBox = true;
+                                var p1 = new Point(p.Y + moveY, p.X - 1);
+                                var p2 = new Point(p.Y + moveY, p.X);
+                                if (!newBoxes.Contains(p1)) newBoxes.Add(p1);
+                                if (!newBoxes.Contains(p2)) newBoxes.Add(p2);
+                            }
+                        }
+                        if (blocked)
+                        {
+                            break; // hit a wall
+                        }
+                        if (!foundBox)
+                        {
+                            break; // only found spaces
+                        }
+                        foreach (Point p in currBoxes)
+                        {
+                            boxes.Add(p);
+                        }
+                        currBoxes.Clear();
+                        currBoxes.AddRange(newBoxes);
+                    }
+                    if (boxes.Count > 0)
+                    {
+                        // move all boxes and robot up/down one
+                    }
+                }
+            }
+        }
         // show result
         for (int y = 0; y < height; y++)
         {
