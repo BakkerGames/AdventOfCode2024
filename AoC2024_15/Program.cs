@@ -2,7 +2,7 @@
 
 internal class Program
 {
-    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_15_Test.txt";
+    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_15_Test_3.txt";
     private const char robotChar = '@';
     private const char boxChar = 'O';
     private const char boxChar1 = '[';
@@ -10,10 +10,14 @@ internal class Program
     private const char wallChar = '#';
     private const char floorChar = '.';
 
+    private static int height = 0;
+    private static int width = 0;
+    private static char[,] grid = new char[0, 0];
+
     static void Main()
     {
-        Puzzle1();
-        Console.WriteLine();
+        //Puzzle1();
+        //Console.WriteLine();
         Puzzle2();
         Console.WriteLine();
         Console.Write("Press enter to continue...");
@@ -24,13 +28,13 @@ internal class Program
     {
         long answer = 0;
         var lines = File.ReadAllLines(inputFile);
-        var height = 0;
-        var width = lines[0].Length;
+        height = 0;
+        width = lines[0].Length;
         while (lines[height] != "")
         {
             height++;
         }
-        var grid = new char[height, width];
+        grid = new char[height, width];
         Point robot = new();
         for (int y = 0; y < height; y++)
         {
@@ -55,6 +59,8 @@ internal class Program
                 }
             }
         }
+        ShowGrid();
+        // move robot and boxes
         foreach (string s in lines[height..])
         {
             foreach (char c in s)
@@ -77,8 +83,11 @@ internal class Program
                         break;
                 }
                 if (moveY == 0 && moveX == 0) continue;
+                Console.WriteLine($"Move {c}:");
                 if (grid[robot.Y + moveY, robot.X + moveX] == wallChar)
                 {
+                    Console.WriteLine("Robot hit wall");
+                    Console.WriteLine();
                     continue; // hit wall, don't move
                 }
                 if (grid[robot.Y + moveY, robot.X + moveX] == floorChar)
@@ -87,6 +96,7 @@ internal class Program
                     robot.Y += moveY;
                     robot.X += moveX;
                     grid[robot.Y, robot.X] = robotChar;
+                    ShowGrid();
                     continue;
                 }
                 // hit a box
@@ -100,6 +110,8 @@ internal class Program
                 if (grid[testY, testX] == wallChar)
                 {
                     // hit a wall, can't move boxes
+                    Console.WriteLine("Boxes hit wall");
+                    Console.WriteLine();
                     continue;
                 }
                 // move box to end (don't have to move whole line!)
@@ -108,9 +120,10 @@ internal class Program
                 robot.Y += moveY;
                 robot.X += moveX;
                 grid[robot.Y, robot.X] = robotChar;
+                ShowGrid();
             }
         }
-        // show result
+        // get answer
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
@@ -119,11 +132,8 @@ internal class Program
                 {
                     answer += (y * 100) + x;
                 }
-                Console.Write(grid[y, x]);
             }
-            Console.WriteLine();
         }
-        Console.WriteLine();
         Console.WriteLine($"Day 15 Puzzle 1 Answer = {answer}");
     }
 
@@ -131,17 +141,18 @@ internal class Program
     {
         long answer = 0;
         var lines = File.ReadAllLines(inputFile);
-        var height = 0;
-        var width = lines[0].Length;
+        height = 0;
+        width = lines[0].Length;
         while (lines[height] != "")
         {
             height++;
         }
-        var grid = new char[height, width * 2];
+        width *= 2;
+        grid = new char[height, width];
         Point robot = new();
         for (int y = 0; y < height; y++)
         {
-            for (int x = 0; x < width; x++)
+            for (int x = 0; x < width / 2; x++)
             {
                 switch (lines[y][x])
                 {
@@ -166,6 +177,8 @@ internal class Program
                 }
             }
         }
+        ShowGrid();
+        // move robot and boxes
         foreach (string s in lines[height..])
         {
             foreach (char c in s)
@@ -188,8 +201,11 @@ internal class Program
                         break;
                 }
                 if (moveY == 0 && moveX == 0) continue;
+                Console.WriteLine($"Move {c}:");
                 if (grid[robot.Y + moveY, robot.X + moveX] == wallChar)
                 {
+                    Console.WriteLine("Robot hit wall");
+                    Console.WriteLine();
                     continue; // hit wall, don't move
                 }
                 if (grid[robot.Y + moveY, robot.X + moveX] == floorChar)
@@ -198,6 +214,7 @@ internal class Program
                     robot.Y += moveY;
                     robot.X += moveX;
                     grid[robot.Y, robot.X] = robotChar;
+                    ShowGrid();
                     continue;
                 }
                 // hit a box
@@ -211,6 +228,8 @@ internal class Program
                     }
                     if (grid[testY, testX] == wallChar)
                     {
+                        Console.WriteLine("Boxes hit wall");
+                        Console.WriteLine();
                         continue; // hit a wall, can't move boxes
                     }
                     while (testX != robot.X)
@@ -221,6 +240,7 @@ internal class Program
                     grid[robot.Y, robot.X] = floorChar;
                     robot.X += moveX;
                     grid[robot.Y, robot.X] = robotChar;
+                    ShowGrid();
                 }
                 else // vertical, have to move boxes as a unit
                 {
@@ -237,13 +257,11 @@ internal class Program
                         currBoxes.Add(new Point(testY, testX - 1));
                     }
                     var blocked = false;
-                    var foundBox = true;
-                    while (!blocked && foundBox)
+                    while (true)
                     {
                         testY += moveY;
                         newBoxes.Clear();
                         blocked = false;
-                        foundBox = false;
                         foreach (Point p in currBoxes)
                         {
                             if (grid[p.Y + moveY, p.X] == wallChar)
@@ -253,7 +271,6 @@ internal class Program
                             }
                             if (grid[p.Y + moveY, p.X] == boxChar1)
                             {
-                                foundBox = true;
                                 var p1 = new Point(p.Y + moveY, p.X);
                                 var p2 = new Point(p.Y + moveY, p.X + 1);
                                 if (!newBoxes.Contains(p1)) newBoxes.Add(p1);
@@ -261,7 +278,6 @@ internal class Program
                             }
                             else if (grid[p.Y + moveY, p.X] == boxChar2)
                             {
-                                foundBox = true;
                                 var p1 = new Point(p.Y + moveY, p.X - 1);
                                 var p2 = new Point(p.Y + moveY, p.X);
                                 if (!newBoxes.Contains(p1)) newBoxes.Add(p1);
@@ -272,34 +288,59 @@ internal class Program
                         {
                             break; // hit a wall
                         }
-                        if (!foundBox)
-                        {
-                            break; // only found spaces
-                        }
                         foreach (Point p in currBoxes)
                         {
                             boxes.Add(p);
                         }
                         currBoxes.Clear();
                         currBoxes.AddRange(newBoxes);
-                    }
-                    if (boxes.Count > 0)
-                    {
-                        // move all boxes and robot up/down one
+                        if (newBoxes.Count > 0)
+                        {
+                            // found boxes, keep looking
+                            continue;
+                        }
+                        // only found spaces, can move boxes
+                        for (int i = boxes.Count - 1; i >= 0; i--)
+                        {
+                            Point p = boxes[i];
+                            Console.WriteLine(p.ToString());
+                            grid[p.Y + moveY, p.X] = grid[p.Y, p.X];
+                            grid[p.Y, p.X] = floorChar;
+                        }
+                        grid[robot.Y, robot.X] = floorChar;
+                        robot.Y += moveY;
+                        grid[robot.Y, robot.X] = robotChar;
+                        ShowGrid();
+                        break;
                     }
                 }
             }
         }
+        // get answer
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (grid[y, x] == boxChar1)
+                {
+                    answer += (y * 100) + x;
+                }
+            }
+        }
+        Console.WriteLine($"Day 15 Puzzle 2 Answer = {answer}");
+    }
+
+    private static void ShowGrid()
+    {
         // show result
         for (int y = 0; y < height; y++)
         {
-            for (int x = 0; x < width * 2; x++)
+            for (int x = 0; x < width; x++)
             {
                 Console.Write(grid[y, x]);
             }
             Console.WriteLine();
         }
         Console.WriteLine();
-        Console.WriteLine($"Day 15 Puzzle 2 Answer = {answer}");
     }
 }

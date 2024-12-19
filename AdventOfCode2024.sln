@@ -37,7 +37,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{BE4F4C69
 		Input\Day_14.txt = Input\Day_14.txt
 		Input\Day_14_Test.txt = Input\Day_14_Test.txt
 		Input\Day_15.txt = Input\Day_15.txt
-		Input\Day_15_Test.txt = Input\Day_15_Test.txt
+		Input\Day_15_Test_1.txt = Input\Day_15_Test_1.txt
+		Input\Day_15_Test_2.txt = Input\Day_15_Test_2.txt
+		Input\Day_15_Test_3.txt = Input\Day_15_Test_3.txt
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AoC2024_02", "AoC2024_02\AoC2024_02.csproj", "{A210BD1E-B9A7-4CBD-9535-F3B704EEF54B}"
