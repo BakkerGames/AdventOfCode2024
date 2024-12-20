@@ -1,20 +1,22 @@
 ﻿
+
 namespace AoC2024_16;
 
 internal class Program
 {
-    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_16.txt";
+    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_16_Test_1.txt";
     private const char wallChar = '#';
     private const char floorChar = '.';
     private const char startChar = 'S';
     private const char endChar = 'E';
 
-    private const bool showPath = false;
+    private const bool showPath = true;
 
     private static int height = 0;
     private static int width = 0;
     private static char[,] grid = new char[0, 0];
     private static int[,] score = new int[0, 0];
+    private static bool[,] bestSeat = new bool[0, 0];
     private static Point startPos = new();
     private static Point endPos = new();
 
@@ -125,8 +127,48 @@ internal class Program
     static void Puzzle2()
     {
         long answer = 0;
-        var lines = File.ReadAllLines(inputFile);
-        // ...
+        // use the grid[,] and score[,] arrays from Puzzle 1 to solve Puzzle 2
+        bestSeat = new bool[height, width];
+        CheckSeats(endPos.Y, endPos.X);
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (bestSeat[y, x]) answer++;
+                if (showPath)
+                {
+                    if (bestSeat[y, x])
+                        Console.Write('O');
+                    else
+                        Console.Write(grid[y, x]);
+                }
+            }
+            if (showPath)
+            {
+                Console.WriteLine();
+            }
+        }
         Console.WriteLine($"Day 16 Puzzle 2 Answer = {answer}");
+    }
+
+    private static void CheckSeats(int y, int x)
+    {
+        bestSeat[y, x] = true;
+        if (grid[y - 1, x] == floorChar && score[y - 1, x] < score[y, x])
+        {
+            CheckSeats(y - 1, x);
+        }
+        if (grid[y, x + 1] == floorChar && score[y, x + 1] < score[y, x])
+        {
+            CheckSeats(y, x + 1);
+        }
+        if (grid[y + 1, x] == floorChar && score[y + 1, x] < score[y, x])
+        {
+            CheckSeats(y + 1, x);
+        }
+        if (grid[y, x - 1] == floorChar && score[y, x - 1] < score[y, x])
+        {
+            CheckSeats(y, x - 1);
+        }
     }
 }
