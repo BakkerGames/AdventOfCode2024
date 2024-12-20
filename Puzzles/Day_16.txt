@@ -1,5 +1,5 @@
-Advent of Code[About][Events][Shop][Settings][Log Out]Scott Bakker 30*
-   0xffff&2024[Calendar][AoC++][Sponsors][Leaderboard][Stats]
+Advent of Code[About][Events][Shop][Settings][Log Out]Scott Bakker 31*
+   0x0000|2024[Calendar][AoC++][Sponsors][Leaderboard][Stats]
 Our sponsors help make Advent of Code possible:
 Cloudsmith - Code shapes reality; now solve your next puzzle: global artifact management. Join our journey to shape, secure, and be the world's software supply chain. We overcame the impossible and became the improbable - now, it's inevitable.
 --- Day 16: Reindeer Maze ---
@@ -86,9 +86,58 @@ Note that the path shown above includes one 90 degree turn as the very first mov
 
 Analyze your map carefully. What is the lowest score a Reindeer could possibly get?
 
-To begin, get your puzzle input.
+Your puzzle answer was 90460.
+
+The first half of this puzzle is complete! It provides one gold star: *
+
+--- Part Two ---
+Now that you know what the best paths look like, you can figure out the best spot to sit.
+
+Every non-wall tile (S, ., or E) is equipped with places to sit along the edges of the tile. While determining which of these tiles would be the best spot to sit depends on a whole bunch of factors (how comfortable the seats are, how far away the bathrooms are, whether there's a pillar blocking your view, etc.), the most important factor is whether the tile is on one of the best paths through the maze. If you sit somewhere else, you'd miss all the action!
+
+So, you'll need to determine which tiles are part of any best path through the maze, including the S and E tiles.
+
+In the first example, there are 45 tiles (marked O) that are part of at least one of the various best paths through the maze:
+
+###############
+#.......#....O#
+#.#.###.#.###O#
+#.....#.#...#O#
+#.###.#####.#O#
+#.#.#.......#O#
+#.#.#####.###O#
+#..OOOOOOOOO#O#
+###O#O#####O#O#
+#OOO#O....#O#O#
+#O#O#O###.#O#O#
+#OOOOO#...#O#O#
+#O###.#.#.#O#O#
+#O..#.....#OOO#
+###############
+In the second example, there are 64 tiles that are part of at least one of the best paths:
+
+#################
+#...#...#...#..O#
+#.#.#.#.#.#.#.#O#
+#.#.#.#...#...#O#
+#.#.#.#.###.#.#O#
+#OOO#.#.#.....#O#
+#O#O#.#.#.#####O#
+#O#O..#.#.#OOOOO#
+#O#O#####.#O###O#
+#O#O#..OOOOO#OOO#
+#O#O###O#####O###
+#O#O#OOO#..OOO#.#
+#O#O#O#####O###.#
+#O#O#OOOOOOO..#.#
+#O#O#O#########.#
+#O#OOO..........#
+#################
+Analyze your map further. How many tiles are part of at least one of the best paths through the maze?
 
 Answer: 
  
+
+Although it hasn't changed, you can still get your puzzle input.
 
 You can also [Share] this puzzle.
