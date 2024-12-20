@@ -2,7 +2,7 @@
 
 internal class Program
 {
-    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_15_Test_3.txt";
+    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_15.txt";
     private const char robotChar = '@';
     private const char boxChar = 'O';
     private const char boxChar1 = '[';
@@ -14,10 +14,12 @@ internal class Program
     private static int width = 0;
     private static char[,] grid = new char[0, 0];
 
+    private static readonly bool showSteps = false;
+
     static void Main()
     {
-        //Puzzle1();
-        //Console.WriteLine();
+        Puzzle1();
+        Console.WriteLine();
         Puzzle2();
         Console.WriteLine();
         Console.Write("Press enter to continue...");
@@ -59,7 +61,10 @@ internal class Program
                 }
             }
         }
-        ShowGrid();
+        if (showSteps)
+        {
+            ShowGrid();
+        }
         // move robot and boxes
         foreach (string s in lines[height..])
         {
@@ -83,11 +88,17 @@ internal class Program
                         break;
                 }
                 if (moveY == 0 && moveX == 0) continue;
-                Console.WriteLine($"Move {c}:");
+                if (showSteps)
+                {
+                    Console.WriteLine($"Move {c}:");
+                }
                 if (grid[robot.Y + moveY, robot.X + moveX] == wallChar)
                 {
-                    Console.WriteLine("Robot hit wall");
-                    Console.WriteLine();
+                    if (showSteps)
+                    {
+                        Console.WriteLine("Robot hit wall");
+                        Console.WriteLine();
+                    }
                     continue; // hit wall, don't move
                 }
                 if (grid[robot.Y + moveY, robot.X + moveX] == floorChar)
@@ -96,7 +107,10 @@ internal class Program
                     robot.Y += moveY;
                     robot.X += moveX;
                     grid[robot.Y, robot.X] = robotChar;
-                    ShowGrid();
+                    if (showSteps)
+                    {
+                        ShowGrid();
+                    }
                     continue;
                 }
                 // hit a box
@@ -110,8 +124,11 @@ internal class Program
                 if (grid[testY, testX] == wallChar)
                 {
                     // hit a wall, can't move boxes
-                    Console.WriteLine("Boxes hit wall");
-                    Console.WriteLine();
+                    if (showSteps)
+                    {
+                        Console.WriteLine("Boxes hit wall");
+                        Console.WriteLine();
+                    }
                     continue;
                 }
                 // move box to end (don't have to move whole line!)
@@ -120,7 +137,10 @@ internal class Program
                 robot.Y += moveY;
                 robot.X += moveX;
                 grid[robot.Y, robot.X] = robotChar;
-                ShowGrid();
+                if (showSteps)
+                {
+                    ShowGrid();
+                }
             }
         }
         // get answer
@@ -177,7 +197,8 @@ internal class Program
                 }
             }
         }
-        ShowGrid();
+        //Console.WriteLine("Initial state:");
+        //ShowGrid();
         // move robot and boxes
         foreach (string s in lines[height..])
         {
@@ -201,11 +222,17 @@ internal class Program
                         break;
                 }
                 if (moveY == 0 && moveX == 0) continue;
-                Console.WriteLine($"Move {c}:");
+                if (showSteps)
+                {
+                    Console.WriteLine($"Move {c}:");
+                }
                 if (grid[robot.Y + moveY, robot.X + moveX] == wallChar)
                 {
-                    Console.WriteLine("Robot hit wall");
-                    Console.WriteLine();
+                    if (showSteps)
+                    {
+                        Console.WriteLine("Robot hit wall");
+                        Console.WriteLine();
+                    }
                     continue; // hit wall, don't move
                 }
                 if (grid[robot.Y + moveY, robot.X + moveX] == floorChar)
@@ -214,7 +241,10 @@ internal class Program
                     robot.Y += moveY;
                     robot.X += moveX;
                     grid[robot.Y, robot.X] = robotChar;
-                    ShowGrid();
+                    if (showSteps)
+                    {
+                        ShowGrid();
+                    }
                     continue;
                 }
                 // hit a box
@@ -228,8 +258,11 @@ internal class Program
                     }
                     if (grid[testY, testX] == wallChar)
                     {
-                        Console.WriteLine("Boxes hit wall");
-                        Console.WriteLine();
+                        if (showSteps)
+                        {
+                            Console.WriteLine("Boxes hit wall");
+                            Console.WriteLine();
+                        }
                         continue; // hit a wall, can't move boxes
                     }
                     while (testX != robot.X)
@@ -240,7 +273,10 @@ internal class Program
                     grid[robot.Y, robot.X] = floorChar;
                     robot.X += moveX;
                     grid[robot.Y, robot.X] = robotChar;
-                    ShowGrid();
+                    if (showSteps)
+                    {
+                        ShowGrid();
+                    }
                 }
                 else // vertical, have to move boxes as a unit
                 {
@@ -267,6 +303,11 @@ internal class Program
                             if (grid[p.Y + moveY, p.X] == wallChar)
                             {
                                 blocked = true;
+                                if (showSteps)
+                                {
+                                    Console.WriteLine("Boxes hit wall");
+                                    Console.WriteLine();
+                                }
                                 break;
                             }
                             if (grid[p.Y + moveY, p.X] == boxChar1)
@@ -286,12 +327,9 @@ internal class Program
                         }
                         if (blocked)
                         {
-                            break; // hit a wall
+                            break;
                         }
-                        foreach (Point p in currBoxes)
-                        {
-                            boxes.Add(p);
-                        }
+                        boxes.AddRange(currBoxes);
                         currBoxes.Clear();
                         currBoxes.AddRange(newBoxes);
                         if (newBoxes.Count > 0)
@@ -303,14 +341,16 @@ internal class Program
                         for (int i = boxes.Count - 1; i >= 0; i--)
                         {
                             Point p = boxes[i];
-                            Console.WriteLine(p.ToString());
                             grid[p.Y + moveY, p.X] = grid[p.Y, p.X];
                             grid[p.Y, p.X] = floorChar;
                         }
                         grid[robot.Y, robot.X] = floorChar;
                         robot.Y += moveY;
                         grid[robot.Y, robot.X] = robotChar;
-                        ShowGrid();
+                        if (showSteps)
+                        {
+                            ShowGrid();
+                        }
                         break;
                     }
                 }
