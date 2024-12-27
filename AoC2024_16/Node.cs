@@ -7,7 +7,7 @@ public class Node
     public int Value = 0;
 
     public Node? Previous = null;
-    public List<Node> Next = [];
+    //public List<Node> Next = [];
 
     public Node()
     {

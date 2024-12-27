@@ -17,6 +17,7 @@ internal class Program
     private static int height = 0;
     private static int width = 0;
     private static char[,] grid = new char[0, 0];
+    private static int[,] minScore = new int[0, 0];
     private static Point startPos = new();
     private static Point endPos = new();
     private static List<Node>[,] nodes = new List<Node>[0, 0];
@@ -30,24 +31,93 @@ internal class Program
     {
         Puzzle1();
         Console.WriteLine();
-        //Puzzle2();
-        //Console.WriteLine();
+        Puzzle2();
+        Console.WriteLine();
         Console.Write("Press enter to continue...");
         Console.ReadLine();
     }
 
     static void Puzzle1()
     {
-        long answer = long.MaxValue;
+        long answer;
         LoadData();
 
-        var rootNode = new Node(startPos.Y, startPos.X, 1); // east
+        var rootNode = new Node(startPos.Y, startPos.X, 1); // east=1
         AddNodes(rootNode);
+
+        if (showData)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if (grid[y, x] == wallChar)
+                    {
+                        Console.Write("      #");
+                    }
+                    else
+                    {
+                        Console.Write($"{minScore[y, x],7}");
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
 
         // get answer
         answer = BestAnswer;
 
         Console.WriteLine($"Day 16 Puzzle 1 Answer = {answer}");
+    }
+
+    static void Puzzle2()
+    {
+        long answer;
+        LoadData();
+
+        var rootNode = new Node(startPos.Y, startPos.X, 1); // east=1
+        AddNodes(rootNode);
+
+        bool[,] bestSeat = new bool[height, width];
+        foreach (Node n in nodes[endPos.Y, endPos.X])
+        {
+            if (n.Value == BestAnswer)
+            {
+                var temp = n;
+                while (temp != null)
+                {
+                    bestSeat[temp.Pos.Y, temp.Pos.X] = true;
+                    temp = temp.Previous;
+                }
+            }
+        }
+        if (showData)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if (bestSeat[y, x])
+                    {
+                        Console.Write('O');
+                    }
+                    else
+                    {
+                        Console.Write(grid[y, x]);
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+        answer = 0;
+        for (int y = 0; y < height; y++)
+        {
+            for (int x = 0; x < width; x++)
+            {
+                if (bestSeat[y, x]) answer++;
+            }
+        }
+        Console.WriteLine($"Day 16 Puzzle 2 Answer = {answer}");
     }
 
     private static void AddNodes(Node n)
@@ -57,15 +127,16 @@ internal class Program
             return;
         }
 
-        foreach (Node temp in nodes[n.Pos.Y, n.Pos.X])
+        if (n.Value > minScore[n.Pos.Y, n.Pos.X])
         {
-            if (n.Value > temp.Value)
-            {
-                return;
-            }
+            return;
         }
 
         nodes[n.Pos.Y, n.Pos.X].Add(n);
+        if (minScore[n.Pos.Y, n.Pos.X] > n.Value)
+        {
+            minScore[n.Pos.Y, n.Pos.X] = n.Value;
+        }
 
         if (n.Pos.Y == endPos.Y && n.Pos.X == endPos.X)
         {
@@ -85,7 +156,7 @@ internal class Program
                 Value = n.Value + stepCost,
                 Previous = n
             };
-            n.Next.Add(nodeForward);
+            //n.Next.Add(nodeForward);
             AddNodes(nodeForward);
         }
 
@@ -97,8 +168,8 @@ internal class Program
             Node nodeTurnLeft = new(n.Pos.Y, n.Pos.X, dirLeft, n.Value + turnCost, n);
             nodes[n.Pos.Y, n.Pos.X].Add(nodeTurnLeft);
             Node nodeLeft = new(yLeft, xLeft, dirLeft, nodeTurnLeft.Value + stepCost, nodeTurnLeft);
-            n.Next.Add(nodeTurnLeft);
-            nodeTurnLeft.Next.Add(nodeLeft);
+            //n.Next.Add(nodeTurnLeft);
+            //nodeTurnLeft.Next.Add(nodeLeft);
             AddNodes(nodeLeft);
         }
 
@@ -110,8 +181,8 @@ internal class Program
             Node nodeTurnRight = new(n.Pos.Y, n.Pos.X, dirRight, n.Value + turnCost, n);
             nodes[n.Pos.Y, n.Pos.X].Add(nodeTurnRight);
             Node nodeRight = new(yRight, xRight, dirRight, nodeTurnRight.Value + stepCost, nodeTurnRight);
-            n.Next.Add(nodeTurnRight);
-            nodeTurnRight.Next.Add(nodeRight);
+            //n.Next.Add(nodeTurnRight);
+            //nodeTurnRight.Next.Add(nodeRight);
             AddNodes(nodeRight);
         }
     }
@@ -130,39 +201,19 @@ internal class Program
         return false;
     }
 
-    static void Puzzle2()
-    {
-        long answer = 0;
-        LoadData();
-        // facing east at start
-        //score[startPos.Y, startPos.X] = 0;
-
-        //CheckPath(startPos.Y - 1, startPos.X, 0, 1001); // left 90-degree turn north
-        //CheckPath(startPos.Y, startPos.X + 1, 1, 1); // one step forward
-        //CheckPath(startPos.Y + 1, startPos.X, 2, 1001); // right 90-degree turn south
-
-        ////bestScore = score[endPos.Y, endPos.X];
-
-        //CheckPath2(startPos.Y - 1, startPos.X, 0, 1001); // left 90-degree turn north
-        //CheckPath2(startPos.Y, startPos.X + 1, 1, 1); // one step forward
-        //CheckPath2(startPos.Y + 1, startPos.X, 2, 1001); // right 90-degree turn south
-
-
-
-        Console.WriteLine($"Day 16 Puzzle 2 Answer = {answer}");
-    }
-
     private static void LoadData()
     {
         var lines = File.ReadAllLines(inputFile);
         height = lines.Length;
         width = lines[0].Length;
         grid = new char[height, width];
+        minScore = new int[height, width];
         nodes = new List<Node>[height, width];
         for (int y = 0; y < height; y++)
         {
             for (int x = 0; x < width; x++)
             {
+                minScore[y, x] = int.MaxValue;
                 nodes[y, x] = [];
                 if (lines[y][x] == startChar)
                 {
