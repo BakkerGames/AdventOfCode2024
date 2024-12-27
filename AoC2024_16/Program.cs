@@ -1,10 +1,8 @@
-﻿
-
-namespace AoC2024_16;
+﻿namespace AoC2024_16;
 
 internal class Program
 {
-    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_16_Test_1.txt";
+    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_16.txt";
     private const char wallChar = '#';
     private const char floorChar = '.';
     private const char startChar = 'S';
@@ -12,7 +10,7 @@ internal class Program
     private const int stepCost = 1;
     private const int turnCost = 1000;
 
-    private const bool showData = true;
+    private static readonly bool showData = false;
 
     private static int height = 0;
     private static int width = 0;
@@ -127,7 +125,7 @@ internal class Program
             return;
         }
 
-        if (n.Value > minScore[n.Pos.Y, n.Pos.X])
+        if (minScore[n.Pos.Y, n.Pos.X] < n.Value - turnCost) // may need to turn to leave this location
         {
             return;
         }
@@ -232,92 +230,4 @@ internal class Program
             }
         }
     }
-
-    //private static void CheckPath(int y, int x, int facing, int scoreToHere)
-    //{
-    //    if (grid[y, x] == wallChar)
-    //    {
-    //        return;
-    //    }
-    //    if (score[y, x] <= scoreToHere)
-    //    {
-    //        return;
-    //    }
-    //    score[y, x] = scoreToHere;
-    //    if (endPos.Y == y && endPos.X == x)
-    //    {
-    //        return; // at end, don't search any more
-    //    }
-    //    CheckPath(y + NextMoveY[(facing + 3) % 4],
-    //              x + NextMoveX[(facing + 3) % 4],
-    //              (facing + 3) % 4,
-    //              scoreToHere + 1001);
-    //    CheckPath(y + NextMoveY[facing],
-    //              x + NextMoveX[facing],
-    //              facing,
-    //              scoreToHere + 1);
-    //    CheckPath(y + NextMoveY[(facing + 1) % 4],
-    //              x + NextMoveX[(facing + 1) % 4],
-    //              (facing + 1) % 4,
-    //              scoreToHere + 1001);
-    //}
-
-    //private static bool CheckPath2(int y, int x, int facing, int scoreToHere)
-    //{
-    //    if (grid[y, x] == wallChar)
-    //    {
-    //        return false;
-    //    }
-    //    var herePoint = new Point(y, x);
-    //    if (endPos.Y == y && endPos.X == x)
-    //    {
-    //        if (scoreToHere == bestScore)
-    //        {
-    //            if (!bestSeats.Contains(herePoint))
-    //            {
-    //                bestSeats.Add(herePoint);
-    //            }
-    //            return true;
-    //        }
-    //        return false;
-    //    }
-    //    var result = false;
-    //    if (CheckPath2(
-    //            y + NextMoveY[(facing + 3) % 4],
-    //            x + NextMoveX[(facing + 3) % 4],
-    //            (facing + 3) % 4,
-    //            scoreToHere + 1001))
-    //    {
-    //        if (!bestSeats.Contains(herePoint))
-    //        {
-    //            bestSeats.Add(herePoint);
-    //        }
-    //        result = true;
-    //    }
-    //    if (CheckPath2(
-    //            y + NextMoveY[facing],
-    //            x + NextMoveX[facing],
-    //            facing,
-    //            scoreToHere + 1))
-    //    {
-    //        if (!bestSeats.Contains(herePoint))
-    //        {
-    //            bestSeats.Add(herePoint);
-    //        }
-    //        result = true;
-    //    }
-    //    if (CheckPath2(
-    //            y + NextMoveY[(facing + 1) % 4],
-    //            x + NextMoveX[(facing + 1) % 4],
-    //            (facing + 1) % 4,
-    //            scoreToHere + 1001))
-    //    {
-    //        if (!bestSeats.Contains(herePoint))
-    //        {
-    //            bestSeats.Add(herePoint);
-    //        }
-    //        result = true;
-    //    }
-    //    return result;
-    //}
 }

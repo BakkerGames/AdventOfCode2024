@@ -84,8 +84,6 @@ Analyze your map carefully. What is the lowest score a Reindeer could possibly g
 
 Your puzzle answer was 90460.
 
-The first half of this puzzle is complete! It provides one gold star: *
-
 --- Part Two ---
 Now that you know what the best paths look like, you can figure out the best spot to sit.
 
@@ -131,9 +129,12 @@ In the second example, there are 64 tiles that are part of at least one of the b
 #################
 Analyze your map further. How many tiles are part of at least one of the best paths through the maze?
 
-Answer: 
- 
+Your puzzle answer was 575.
 
-Although it hasn't changed, you can still get your puzzle input.
+Both parts of this puzzle are complete! They provide two gold stars: **
+
+At this point, you should return to your Advent calendar and try another puzzle.
+
+If you still want to see it, you can get your puzzle input.
 
 You can also [Share] this puzzle.
