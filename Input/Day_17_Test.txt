@@ -1,1 +1,35 @@
-hello world
+Register A: 0
+Register B: 0
+Register C: 9
+Expected: B=1
+Program: 2,6
+
+Register A: 10
+Register B: 0
+Register C: 0
+Expected: 0,1,2
+Program: 5,0,5,1,5,4
+
+Register A: 2024
+Register B: 0
+Register C: 0
+Expected: A=0, 4,2,5,6,7,7,7,7,3,1,0
+Program: 0,1,5,4,3,0
+
+Register A: 0
+Register B: 29
+Register C: 0
+Expected: B=26
+Program: 1,7
+
+Register A: 0
+Register B: 2024
+Register C: 43690
+Expected: B=44354
+Program: 4,0
+
+Register A: 729
+Register B: 0
+Register C: 0
+Expected: 4,6,3,5,6,3,5,2,1,0
+Program: 0,1,5,4,3,0
