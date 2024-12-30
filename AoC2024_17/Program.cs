@@ -1,14 +1,12 @@
-﻿using System.Text;
-
-namespace AoC2024_17;
+﻿namespace AoC2024_17;
 
 internal class Program
 {
     private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_17.txt";
 
-    private static int A = 0;
-    private static int B = 0;
-    private static int C = 0;
+    private static long A = 0;
+    private static long B = 0;
+    private static long C = 0;
     private static List<int> prog = [];
     private static int ip;
 
@@ -24,24 +22,24 @@ internal class Program
 
     static void Puzzle1()
     {
-        List<int> output = [];
+        List<long> output = [];
         var lines = File.ReadAllLines(inputFile);
         var Expected = "";
         foreach (string s in lines)
         {
             if (s.StartsWith("Register A:"))
             {
-                A = int.Parse(s[11..].Trim());
+                A = long.Parse(s[11..].Trim());
                 continue;
             }
             if (s.StartsWith("Register B:"))
             {
-                B = int.Parse(s[11..].Trim());
+                B = long.Parse(s[11..].Trim());
                 continue;
             }
             if (s.StartsWith("Register C:"))
             {
-                C = int.Parse(s[11..].Trim());
+                C = long.Parse(s[11..].Trim());
                 continue;
             }
             if (s.StartsWith("Expected:"))
@@ -77,25 +75,25 @@ internal class Program
 
     static void Puzzle2()
     {
-        int answer = 0;
-        List<int> output = [];
+        long answer = 0;
+        List<long> output = [];
         var lines = File.ReadAllLines(inputFile);
         var Expected = "";
         foreach (string s in lines)
         {
             if (s.StartsWith("Register A:"))
             {
-                A = int.Parse(s[11..].Trim());
+                A = long.Parse(s[11..].Trim());
                 continue;
             }
             if (s.StartsWith("Register B:"))
             {
-                B = int.Parse(s[11..].Trim());
+                B = long.Parse(s[11..].Trim());
                 continue;
             }
             if (s.StartsWith("Register C:"))
             {
-                C = int.Parse(s[11..].Trim());
+                C = long.Parse(s[11..].Trim());
                 continue;
             }
             if (s.StartsWith("Expected:"))
@@ -157,36 +155,26 @@ internal class Program
         }
     }
 
-    private static int GetCombo(int value)
+    private static long GetCombo(long value)
     {
-        switch (value)
+        return value switch
         {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-                return value;
-            case 4:
-                return A;
-            case 5:
-                return B;
-            case 6:
-                return C;
-            case 7: // invalid
-                throw new SystemException("Invalid operand 7");
-            default: // invalid
-                throw new SystemException($"Unknown operand {value}");
-        }
+            0 or 1 or 2 or 3 => value,
+            4 => A,
+            5 => B,
+            6 => C,
+            _ => throw new SystemException($"Invalid operand {value}"),
+        };
     }
 
-    private static void PerformInstruction(int instruction, int literal, ref int ip, List<int> output)
+    private static void PerformInstruction(int instruction, int literal, ref int ip, List<long> output)
     {
-        int combo;
+        long combo;
         switch (instruction)
         {
             case 0: // adv
                 combo = GetCombo(literal);
-                A = (int)(A / Math.Pow(2, combo));
+                A = (long)(A / Math.Pow(2, combo));
                 break;
             case 1: // bxl
                 B ^= literal;
@@ -210,11 +198,11 @@ internal class Program
                 break;
             case 6: // bdv
                 combo = GetCombo(literal);
-                B = (int)(A / Math.Pow(2, combo));
+                B = (long)(A / Math.Pow(2, combo));
                 break;
             case 7: // cdv
                 combo = GetCombo(literal);
-                C = (int)(A / Math.Pow(2, combo));
+                C = (long)(A / Math.Pow(2, combo));
                 break;
         }
     }
