@@ -2,7 +2,7 @@
 
 internal class Program
 {
-    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_17.txt";
+    private const string inputFile = "C:\\Users\\Scott\\source\\repos\\AdventOfCode2024\\Input\\Day_17_Test_2.txt";
 
     private static long A = 0;
     private static long B = 0;
@@ -104,46 +104,48 @@ internal class Program
             if (s.StartsWith("Program:"))
             {
                 prog = s[8..].Trim().Split(',').Select(x => int.Parse(x)).ToList();
-                Console.WriteLine(s);
-                output.Clear();
-                ip = 0;
-                A = answer;
-                bool match = false;
-                do
-                {
-                    while (ip < prog.Count)
-                    {
-                        int instruction = prog[ip];
-                        int literal = prog[ip + 1];
-                        ip += 2;
-                        PerformInstruction(instruction, literal, ref ip, output);
-                    }
-                    match = output.Count == prog.Count;
-                    if (match)
-                    {
-                        for (int i = 0; i < output.Count; i++)
-                        {
-                            if (output[i] != prog[i])
-                            {
-                                match = false;
-                            }
-                        }
-                    }
-                    if (!match)
-                    {
-                        answer++;
-                        A = answer;
-                        B = 0;
-                        C = 0;
-                        ip = 0;
-                        output.Clear();
-                        if (answer % 1000000 == 0)
-                        {
-                            Console.Write('\r');
-                            Console.Write(answer);
-                        }
-                    }
-                } while (!match);
+                OutputInstructions(prog);
+                //return;
+                //Console.WriteLine(s);
+                //output.Clear();
+                //ip = 0;
+                //A = answer;
+                //bool match = false;
+                //do
+                //{
+                //    while (ip < prog.Count)
+                //    {
+                //        int instruction = prog[ip];
+                //        int literal = prog[ip + 1];
+                //        ip += 2;
+                //        PerformInstruction(instruction, literal, ref ip, output);
+                //    }
+                //    match = output.Count == prog.Count;
+                //    if (match)
+                //    {
+                //        for (int i = 0; i < output.Count; i++)
+                //        {
+                //            if (output[i] != prog[i])
+                //            {
+                //                match = false;
+                //            }
+                //        }
+                //    }
+                //    if (!match)
+                //    {
+                //        answer++;
+                //        A = answer;
+                //        B = 0;
+                //        C = 0;
+                //        ip = 0;
+                //        output.Clear();
+                //        if (answer % 1000000 == 0)
+                //        {
+                //            Console.Write('\r');
+                //            Console.Write(answer);
+                //        }
+                //    }
+                //} while (!match);
                 Console.WriteLine();
                 Console.WriteLine($"Result A={A}");
                 Console.WriteLine($"Result B={B}");
@@ -165,6 +167,53 @@ internal class Program
             6 => C,
             _ => throw new SystemException($"Invalid operand {value}"),
         };
+    }
+
+    private static void OutputInstructions(List<int> prog)
+    {
+        int ip = 0;
+        while (ip < prog.Count)
+        {
+            int instruction = prog[ip];
+            int literal = prog[ip + 1];
+            string literalValue = literal switch
+            {
+                0 or 1 or 2 or 3 => literal.ToString(),
+                4 => "A",
+                5 => "B",
+                6 => "C",
+                _ => "ERR",
+            };
+            switch (instruction)
+            {
+                case 0: // adv
+                    Console.WriteLine($"adv A<-A/2^{literalValue}");
+                    break;
+                case 1: // bxl
+                    Console.WriteLine($"bxl B^{literal}");
+                    B ^= literal;
+                    break;
+                case 2: // bst
+                    Console.WriteLine($"bst B<-{literalValue}");
+                    break;
+                case 3: // jnz
+                    Console.WriteLine($"jnz {literal}");
+                    break;
+                case 4: // bxc
+                    Console.WriteLine("bxc B<-B xor C");
+                    break;
+                case 5: // out
+                    Console.WriteLine($"out {literalValue}");
+                    break;
+                case 6: // bdv
+                    Console.WriteLine($"bdv B<-A/2^{literalValue}");
+                    break;
+                case 7: // cdv
+                    Console.WriteLine($"cdv C<-A/2^{literalValue}");
+                    break;
+            }
+            ip += 2;
+        }
     }
 
     private static void PerformInstruction(int instruction, int literal, ref int ip, List<long> output)
