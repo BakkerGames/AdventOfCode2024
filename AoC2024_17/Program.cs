@@ -104,7 +104,7 @@ internal class Program
             if (s.StartsWith("Program:"))
             {
                 prog = s[8..].Trim().Split(',').Select(x => int.Parse(x)).ToList();
-                OutputInstructions(prog);
+                Decompile(prog);
                 //return;
                 //Console.WriteLine(s);
                 //output.Clear();
@@ -169,7 +169,7 @@ internal class Program
         };
     }
 
-    private static void OutputInstructions(List<int> prog)
+    private static void Decompile(List<int> prog)
     {
         int ip = 0;
         while (ip < prog.Count)
@@ -216,41 +216,73 @@ internal class Program
         }
     }
 
-    private static void PerformInstruction(int instruction, int literal, ref int ip, List<long> output)
+    private static void PerformInstruction(int instruction, int literal, ref int ip, List<long> output, bool debug = false)
     {
         long combo;
         switch (instruction)
         {
             case 0: // adv
                 combo = GetCombo(literal);
+                if (debug)
+                {
+                    Console.WriteLine($"adv {literal} - combo: {combo} A: {A} NewA: {(long)(A / Math.Pow(2, combo))}");
+                }
                 A = (long)(A / Math.Pow(2, combo));
                 break;
             case 1: // bxl
+                if (debug)
+                {
+                    Console.WriteLine($"bxl {literal} - B: {A} NewB: {B ^ literal}");
+                }
                 B ^= literal;
                 break;
             case 2: // bst
                 combo = GetCombo(literal);
+                if (debug)
+                {
+                    Console.WriteLine($"bst {literal} - combo: {combo} B: {A} NewB: {combo % 8}");
+                }
                 B = combo % 8;
                 break;
             case 3: // jnz
+                if (debug)
+                {
+                    Console.WriteLine($"jnz {literal} - A: {A} jump: {A != 0} ip: {ip} NewIP: {(A != 0 ? literal : ip)}");
+                }
                 if (A != 0)
                 {
                     ip = literal;
                 }
                 break;
             case 4: // bxc
+                if (debug)
+                {
+                    Console.WriteLine($"bxc {literal} - B: {B} C: {C} NewB: {B ^ C}");
+                }
                 B ^= C;
                 break;
             case 5: // out
                 combo = GetCombo(literal);
+                if (debug)
+                {
+                    Console.WriteLine($"out {literal} - combo: {combo} output: {combo % 8}");
+                }
                 output.Add(combo % 8);
                 break;
             case 6: // bdv
                 combo = GetCombo(literal);
+                if (debug)
+                {
+                    Console.WriteLine($"bdv {literal} - combo: {combo} A: {A} B: {B} NewB: {(long)(A / Math.Pow(2, combo))}");
+                }
                 B = (long)(A / Math.Pow(2, combo));
                 break;
             case 7: // cdv
                 combo = GetCombo(literal);
+                if (debug)
+                {
+                    Console.WriteLine($"cdv {literal} - combo: {combo} A: {A} C: {C} NewC: {(long)(A / Math.Pow(2, combo))}");
+                }
                 C = (long)(A / Math.Pow(2, combo));
                 break;
         }
