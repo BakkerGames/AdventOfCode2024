@@ -102,29 +102,38 @@ internal class Program
             }
             if (s.StartsWith("Program:"))
             {
-                Console.WriteLine($"Initial A={Convert.ToString(A, 8)}");
-                Console.WriteLine($"Initial B={Convert.ToString(B, 8)}");
-                Console.WriteLine($"Initial C={Convert.ToString(C, 8)}");
-                Console.WriteLine();
                 Console.WriteLine(s);
                 Console.WriteLine();
                 prog = s[8..].Trim().Split(',').Select(x => int.Parse(x)).ToList();
                 Decompile(prog);
                 Console.WriteLine();
-                while (ip < prog.Count)
+                long answer = 0;
+                for (long aStart = 0; aStart < 8; aStart++)
                 {
-                    int instruction = prog[ip];
-                    int literal = prog[ip + 1];
-                    ip += 2;
-                    PerformInstruction(instruction, literal, ref ip, output, true);
+                    ip = 0;
+                    A = (answer * 8) + aStart;
+                    B = 0;
+                    C = 0;
+                    output.Clear();
+                    Console.WriteLine($"A = {Convert.ToString(A, 8)}");
+                    while (ip < prog.Count)
+                    {
+                        int instruction = prog[ip];
+                        int literal = prog[ip + 1];
+                        ip += 2;
+                        PerformInstruction(instruction, literal, ref ip, output, false);
+                    }
+                    Console.WriteLine($"Output = {string.Join(',', output)}");
+                    for (int i = 0; i < output.Count; i++)
+                    {
+                        if (output[output.Count - i - 1] == prog[i])
+                        {
+                            answer = (answer * 8) + aStart;
+                        }
+                    }
+                    Console.WriteLine();
                 }
-                Console.WriteLine();
-                Console.WriteLine($"Result A={Convert.ToString(A, 8)}");
-                Console.WriteLine($"Result B={Convert.ToString(B, 8)}");
-                Console.WriteLine($"Result C={Convert.ToString(C, 8)}");
-                Console.WriteLine();
-                Console.WriteLine(s);
-                Console.WriteLine($"Day 17 Puzzle 2 Output = {string.Join(',', output)}");
+                Console.WriteLine($"Day 17 Puzzle 2 Answer = {answer}");
             }
         }
     }
