@@ -1,0 +1,105 @@
+Initial A=306416164
+Initial B=0
+Initial C=0
+
+Program: 2,4,1,7,7,5,0,3,4,4,1,7,5,5,3,0
+
+bst 4 - B <- A % 8
+bxl 7 - B <- B xor 7
+cdv 5 - C <- A / 2^B
+adv 3 - A <- A / 2^3
+bxc 4 - B <- B xor C
+bxl 7 - B <- B xor 7
+out 5 - B % 8
+jnz 0
+
+bst 4 - B <= A(306416164) % 8 = 4
+bxl 7 - B <= B(4) xor 7 = 3
+cdv 5 - C <= A(306416164) / 2 ^ B(3) = 30641616
+adv 3 - A <= A(306416164) / 2 ^ 3(3) = 30641616
+bxc 4 - B <= B(3) xor C(30641616) = 30641615
+bxl 7 - B <= B(30641615) xor 7 = 30641612
+out 5 - B(30641612) % 8 = 2
+2
+jnz 0 - A: 30641616 jump: True
+bst 4 - B <= A(30641616) % 8 = 6
+bxl 7 - B <= B(6) xor 7 = 1
+cdv 5 - C <= A(30641616) / 2 ^ B(1) = 14320707
+adv 3 - A <= A(30641616) / 2 ^ 3(3) = 3064161
+bxc 4 - B <= B(1) xor C(14320707) = 14320706
+bxl 7 - B <= B(14320706) xor 7 = 14320701
+out 5 - B(14320701) % 8 = 1
+1
+jnz 0 - A: 3064161 jump: True
+bst 4 - B <= A(3064161) % 8 = 1
+bxl 7 - B <= B(1) xor 7 = 6
+cdv 5 - C <= A(3064161) / 2 ^ B(6) = 30641
+adv 3 - A <= A(3064161) / 2 ^ 3(3) = 306416
+bxc 4 - B <= B(6) xor C(30641) = 30647
+bxl 7 - B <= B(30647) xor 7 = 30640
+out 5 - B(30640) % 8 = 0
+0
+jnz 0 - A: 306416 jump: True
+bst 4 - B <= A(306416) % 8 = 6
+bxl 7 - B <= B(6) xor 7 = 1
+cdv 5 - C <= A(306416) / 2 ^ B(1) = 143207
+adv 3 - A <= A(306416) / 2 ^ 3(3) = 30641
+bxc 4 - B <= B(1) xor C(143207) = 143206
+bxl 7 - B <= B(143206) xor 7 = 143201
+out 5 - B(143201) % 8 = 1
+1
+jnz 0 - A: 30641 jump: True
+bst 4 - B <= A(30641) % 8 = 1
+bxl 7 - B <= B(1) xor 7 = 6
+cdv 5 - C <= A(30641) / 2 ^ B(6) = 306
+adv 3 - A <= A(30641) / 2 ^ 3(3) = 3064
+bxc 4 - B <= B(6) xor C(306) = 300
+bxl 7 - B <= B(300) xor 7 = 307
+out 5 - B(307) % 8 = 7
+7
+jnz 0 - A: 3064 jump: True
+bst 4 - B <= A(3064) % 8 = 4
+bxl 7 - B <= B(4) xor 7 = 3
+cdv 5 - C <= A(3064) / 2 ^ B(3) = 306
+adv 3 - A <= A(3064) / 2 ^ 3(3) = 306
+bxc 4 - B <= B(3) xor C(306) = 305
+bxl 7 - B <= B(305) xor 7 = 302
+out 5 - B(302) % 8 = 2
+2
+jnz 0 - A: 306 jump: True
+bst 4 - B <= A(306) % 8 = 6
+bxl 7 - B <= B(6) xor 7 = 1
+cdv 5 - C <= A(306) / 2 ^ B(1) = 143
+adv 3 - A <= A(306) / 2 ^ 3(3) = 30
+bxc 4 - B <= B(1) xor C(143) = 142
+bxl 7 - B <= B(142) xor 7 = 145
+out 5 - B(145) % 8 = 5
+5
+jnz 0 - A: 30 jump: True
+bst 4 - B <= A(30) % 8 = 0
+bxl 7 - B <= B(0) xor 7 = 7
+cdv 5 - C <= A(30) / 2 ^ B(7) = 0
+adv 3 - A <= A(30) / 2 ^ 3(3) = 3
+bxc 4 - B <= B(7) xor C(0) = 7
+bxl 7 - B <= B(7) xor 7 = 0
+out 5 - B(0) % 8 = 0
+0
+jnz 0 - A: 3 jump: True
+bst 4 - B <= A(3) % 8 = 3
+bxl 7 - B <= B(3) xor 7 = 4
+cdv 5 - C <= A(3) / 2 ^ B(4) = 0
+adv 3 - A <= A(3) / 2 ^ 3(3) = 0
+bxc 4 - B <= B(4) xor C(0) = 4
+bxl 7 - B <= B(4) xor 7 = 3
+out 5 - B(3) % 8 = 3
+3
+jnz 0 - A: 0 jump: False
+
+Result A=0
+Result B=3
+Result C=0
+
+Program: 2,4,1,7,7,5,0,3,4,4,1,7,5,5,3,0
+Day 17 Puzzle 2 Output = 2,1,0,1,7,2,5,0,3
+
+Press enter to continue...

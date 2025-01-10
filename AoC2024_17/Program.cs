@@ -75,7 +75,6 @@ internal class Program
 
     static void Puzzle2()
     {
-        long answer = 0;
         List<long> output = [];
         var lines = File.ReadAllLines(inputFile);
         var Expected = "";
@@ -103,9 +102,9 @@ internal class Program
             }
             if (s.StartsWith("Program:"))
             {
-                Console.WriteLine($"Initial A={A}");
-                Console.WriteLine($"Initial B={B}");
-                Console.WriteLine($"Initial C={C}");
+                Console.WriteLine($"Initial A={Convert.ToString(A, 8)}");
+                Console.WriteLine($"Initial B={Convert.ToString(B, 8)}");
+                Console.WriteLine($"Initial C={Convert.ToString(C, 8)}");
                 Console.WriteLine();
                 Console.WriteLine(s);
                 Console.WriteLine();
@@ -120,12 +119,12 @@ internal class Program
                     PerformInstruction(instruction, literal, ref ip, output, true);
                 }
                 Console.WriteLine();
-                Console.WriteLine($"Result A={A}");
-                Console.WriteLine($"Result B={B}");
-                Console.WriteLine($"Result C={C}");
-                Console.WriteLine($"Day 17 Puzzle 2 Output = {string.Join(',', output)}");
-                Console.WriteLine($"Day 17 Puzzle 2 Answer = {answer}");
+                Console.WriteLine($"Result A={Convert.ToString(A, 8)}");
+                Console.WriteLine($"Result B={Convert.ToString(B, 8)}");
+                Console.WriteLine($"Result C={Convert.ToString(C, 8)}");
                 Console.WriteLine();
+                Console.WriteLine(s);
+                Console.WriteLine($"Day 17 Puzzle 2 Output = {string.Join(',', output)}");
             }
         }
     }
@@ -160,29 +159,29 @@ internal class Program
             switch (instruction)
             {
                 case 0: // adv
-                    Console.WriteLine($"adv A <- A/2^{literalValue}");
+                    Console.WriteLine($"adv {literal} - A <- A / 2^{literalValue}");
                     break;
                 case 1: // bxl
-                    Console.WriteLine($"bxl B <- B xor {literal}");
+                    Console.WriteLine($"bxl {literal} - B <- B xor {literal}");
                     B ^= literal;
                     break;
                 case 2: // bst
-                    Console.WriteLine($"bst B <- {literalValue} % 8");
+                    Console.WriteLine($"bst {literal} - B <- {literalValue} % 8");
                     break;
                 case 3: // jnz
                     Console.WriteLine($"jnz {literal}");
                     break;
                 case 4: // bxc
-                    Console.WriteLine("bxc B <- B xor C");
+                    Console.WriteLine($"bxc {literal} - B <- B xor C");
                     break;
                 case 5: // out
-                    Console.WriteLine($"out {literalValue} % 8");
+                    Console.WriteLine($"out {literal} - {literalValue} % 8");
                     break;
                 case 6: // bdv
-                    Console.WriteLine($"bdv B<-A/2^{literalValue}");
+                    Console.WriteLine($"bdv {literal} - B <- A / 2^{literalValue}");
                     break;
                 case 7: // cdv
-                    Console.WriteLine($"cdv C<-A/2^{literalValue}");
+                    Console.WriteLine($"cdv {literal} - C <- A / 2^{literalValue}");
                     break;
             }
             ip += 2;
@@ -192,20 +191,28 @@ internal class Program
     private static void PerformInstruction(int instruction, int literal, ref int ip, List<long> output, bool debug = false)
     {
         long combo;
+        string literalValue = literal switch
+        {
+            0 or 1 or 2 or 3 => literal.ToString(),
+            4 => "A",
+            5 => "B",
+            6 => "C",
+            _ => "ERR",
+        };
         switch (instruction)
         {
             case 0: // adv
                 combo = GetCombo(literal);
                 if (debug)
                 {
-                    Console.WriteLine($"adv {literal} - combo: {combo} A: {A} NewA: A/2^{combo} = {(long)(A / Math.Pow(2, combo))}");
+                    Console.WriteLine($"adv {literal} - A <= A({Convert.ToString(A, 8)}) / 2 ^ {literalValue}({combo}) = {Convert.ToString((long)(A / Math.Pow(2, combo)), 8)}");
                 }
                 A = (long)(A / Math.Pow(2, combo));
                 break;
             case 1: // bxl
                 if (debug)
                 {
-                    Console.WriteLine($"bxl {literal} - B: {A} NewB: B xor {literal} = {B ^ literal}");
+                    Console.WriteLine($"bxl {literal} - B <= B({Convert.ToString(B, 8)}) xor {Convert.ToString(literal, 8)} = {Convert.ToString(B ^ literal, 8)}");
                 }
                 B ^= literal;
                 break;
@@ -213,14 +220,14 @@ internal class Program
                 combo = GetCombo(literal);
                 if (debug)
                 {
-                    Console.WriteLine($"bst {literal} - combo: {combo} B: {A} NewB: {combo} % 8 = {combo % 8}");
+                    Console.WriteLine($"bst {literal} - B <= {literalValue}({Convert.ToString(combo, 8)}) % 8 = {combo % 8}");
                 }
                 B = combo % 8;
                 break;
             case 3: // jnz
                 if (debug)
                 {
-                    Console.WriteLine($"jnz {literal} - A: {A} jump: {A != 0} ip: {ip} NewIP: {(A != 0 ? literal : ip)}");
+                    Console.WriteLine($"jnz {literal} - A: {Convert.ToString(A, 8)} jump: {A != 0}");
                 }
                 if (A != 0)
                 {
@@ -230,7 +237,7 @@ internal class Program
             case 4: // bxc
                 if (debug)
                 {
-                    Console.WriteLine($"bxc {literal} - B: {B} C: {C} NewB: B xor C = {B ^ C}");
+                    Console.WriteLine($"bxc {literal} - B <= B({Convert.ToString(B, 8)}) xor C({Convert.ToString(C, 8)}) = {Convert.ToString(B ^ C, 8)}");
                 }
                 B ^= C;
                 break;
@@ -238,7 +245,7 @@ internal class Program
                 combo = GetCombo(literal);
                 if (debug)
                 {
-                    Console.WriteLine($"out {literal} - combo: {combo} output: {combo} % 8 = {combo % 8}");
+                    Console.WriteLine($"out {literal} - {literalValue}({Convert.ToString(combo, 8)}) % 8 = {combo % 8}");
                     Console.WriteLine($"{combo % 8}");
                 }
                 output.Add(combo % 8);
@@ -247,7 +254,7 @@ internal class Program
                 combo = GetCombo(literal);
                 if (debug)
                 {
-                    Console.WriteLine($"bdv {literal} - combo: {combo} A: {A} B: {B} NewB: A/2^{combo} = {(long)(A / Math.Pow(2, combo))}");
+                    Console.WriteLine($"bdv {literal} - B <= A({Convert.ToString(A, 8)}) / 2 ^ {literalValue}({combo}) = {Convert.ToString((long)(A / Math.Pow(2, combo)), 8)}");
                 }
                 B = (long)(A / Math.Pow(2, combo));
                 break;
@@ -255,7 +262,7 @@ internal class Program
                 combo = GetCombo(literal);
                 if (debug)
                 {
-                    Console.WriteLine($"cdv {literal} - combo: {combo} A: {A} C: {C} NewC: A/2^{combo} = {(long)(A / Math.Pow(2, combo))}");
+                    Console.WriteLine($"cdv {literal} - C <= A({Convert.ToString(A, 8)}) / 2 ^ {literalValue}({combo}) = {Convert.ToString((long)(A / Math.Pow(2, combo)), 8)}");
                 }
                 C = (long)(A / Math.Pow(2, combo));
                 break;
